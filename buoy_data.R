@@ -50,5 +50,16 @@ buoy_data <- buoy_data %>% select(- Year1)
 buoy_data <- buoy_data %>% select(- YY)
 buoy_data <- buoy_data %>% select(Year, everything())
 
+# Combine WD and WDIR, both represents wind direction, call it WindDir
+buoy_data <- buoy_data %>% mutate(WindDir = coalesce(WDIR, WD))
+buoy_data <- buoy_data %>% select(-WDIR)
+buoy_data <- buoy_data %>% select(- WD)
+
+# Combine PRES and BAR, both represents pressure, call it Pressure
+buoy_data <- buoy_data %>% mutate(Pressure = coalesce(PRES, BAR))
+buoy_data <- buoy_data %>% select(-PRES)
+buoy_data <- buoy_data %>% select(- BAR)
+
+
 write.csv(buoy_data, "buoy_data.csv", row.names = FALSE)
 
